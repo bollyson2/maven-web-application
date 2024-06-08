@@ -9,7 +9,7 @@
 </head>
 </head>
 <body>
-<h1 align="center">Welcome to LearnWithPride Solutions, London, United Kingdom Office.</h1>
+<h1 align="center">Welcome to BSP-SOLUTIONS, London, United Kingdom Office.</h1>
 <h1 align="center">Presently with over 200 Clients, We Develop and support Quality  Software Solutions to Millions of Clients.
 	We offer The Best Training Globally for DevOps with Linux and Cloud. We are dedicated to equipping IT Engineers for Best Performance. We are the Best at what we do</h1>
 <hr>
