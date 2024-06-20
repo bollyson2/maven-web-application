@@ -1,0 +1,40 @@
+node{
+  def mavenHome = tool name: 'maven3.9.7'
+  stage('1clone code'){
+     git 'https://github.com/bollyson2/maven-web-application.git'
+  }
+  stage('2BuildArtifact'){
+     sh "${mavenHome}/bin/mvn clean package"
+     //bat 'mvn package'
+  }
+    /*stage('3CodeQuality'){
+    sh "${mavenHome}/bin/mvn sonar;sonar"
+  }
+  stage('4UploadArtifacts'){
+    sh "${mavenHome}/bin/mvn deploy"
+  }
+  */
+  stage('5Deploy2UAT'){
+    sshagent(['Agent1-Credentials']) {
+    sh "scp -o StrictHostKeyChecking=no target/*.war ec2-user@18.234.45.152:/opt/tomcat9/webapps/aut-app.war" 
+  }
+  stage('6Approval'){
+    timeout(time:5, unit: 'HOURS'){
+    input message: 'Kindly review UAT and Approve for Production'   
+  }
+  stage('7Deploy'){
+    deploy adapters: [tomcat9(credentialsId: 'tomcat-Credential', path: '', url: 'http://18.234.45.152:8080/')], contextPath: null, war: 'target/*.war'
+  }
+    stage('8EmailPush'){
+    emailext body: '''Hello all,
+
+Kindly access the backend or review subject matter for necessary feedback
+
+Regards
+
+LWP- Project Lead
++447990000033''', subject: 'BSP Project Build Status', to: 'noexcuseforfailure1@gmail.com, christinme1980@gmail.com'
+  }
+}
+}
+}
